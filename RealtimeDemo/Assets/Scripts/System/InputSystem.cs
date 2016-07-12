@@ -23,46 +23,49 @@ public class InputSystem : AbstractSystem {
 
 	public override void DoUpdate (float dt)
 	{
+		if(Input.GetKeyUp(KeyCode.W))
+		{
+			dir.y -= 1;
+		}
 
 		if(Input.GetKeyDown(KeyCode.W))
 		{
-			dir.y = 1;
+			dir.y += 1;
 		}
 
-		if(Input.GetKeyUp(KeyCode.W))
-		{
-			dir.y = 0;
-		}
+
 
 		if(Input.GetKeyDown(KeyCode.S))
 		{
-			dir.y = -1;
+			dir.y -= 1;
 		}
 
 		if(Input.GetKeyUp(KeyCode.S))
 		{
-			dir.y = 0;
+			dir.y += 1;
 		}
 
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-			dir.x = -1;
+			dir.x -= 1;
 		}
 
 		if(Input.GetKeyUp(KeyCode.A))
 		{
-			dir.x = 0;
-		}
-
-		if(Input.GetKeyDown(KeyCode.D))
-		{
-			dir.x = 1;
+			dir.x += 1;
 		}
 
 		if(Input.GetKeyUp(KeyCode.D))
 		{
-			dir.x = 0;
+			dir.x -= 1;
 		}
+
+		if(Input.GetKeyDown(KeyCode.D))
+		{
+			dir.x += 1;
+		}
+
+
 
 		count -= dt;
 		if(count <= 0)
@@ -70,7 +73,7 @@ public class InputSystem : AbstractSystem {
 			count = DELAY_INPUT;
 			List<MoveComponent.MoveInput> inputs = new List<MoveComponent.MoveInput>();
 			MoveComponent.MoveInput input = new MoveComponent.MoveInput();
-			input.dir = dir;
+			input.dir = new Vector3(dir.x, dir.y, dir.z);
 			input.id = ownerId;
 			inputs.Add(input);
 

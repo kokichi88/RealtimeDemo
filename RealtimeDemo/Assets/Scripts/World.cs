@@ -57,6 +57,16 @@ public class World : MonoBehaviour {
 		++genId;
 	}
 
+	public GameObject GetPlayerById(int id)
+	{
+		for(int i = 0; i < players.Count; ++i)
+		{
+			if(players[i].GetComponent<ActorComponent>().id == id)
+				return players[i];
+		}
+		return null;
+	}
+
 	public void AddSystem(AbstractSystem system)
 	{
 		systems.Add(system);
@@ -113,6 +123,7 @@ public class World : MonoBehaviour {
 					systems[j].ProcessMessage(messages[i]);
 				}
 				messages.RemoveAt(i);
+				--i;
 			}
 		}
 		++currentFrame;

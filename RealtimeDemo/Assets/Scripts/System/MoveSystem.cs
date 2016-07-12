@@ -6,18 +6,22 @@ public class MoveSystem : AbstractSystem {
 
 	public override void DoFixedUpdate (float dt)
 	{
-		for(int i = 0; i < this.world.players.Count; ++i)
+		if(this.world.role == World.Role.SERVER || this.world.mode == World.Mode.OFF_LINE)
 		{
-			GameObject player = this.world.players[i];
-			MoveComponent moveComp = player.GetComponent<MoveComponent>();
-			moveComp.pos += moveComp.dir * moveComp.currSpeed * dt;
-			moveComp.currSpeed -= moveComp.friction * dt;
-			if(moveComp.currSpeed < 0) moveComp.currSpeed = 0;
-			if(moveComp.pos.x < 0) moveComp.pos.x = 0;
-			if(moveComp.pos.x > World.MAX_X) moveComp.pos.x = World.MAX_X;
-			if(moveComp.pos.y < 0) moveComp.pos.y = 0;
-			if(moveComp.pos.y > World.MAX_Y) moveComp.pos.y = World.MAX_Y;
+			for(int i = 0; i < this.world.players.Count; ++i)
+			{
+				GameObject player = this.world.players[i];
+				MoveComponent moveComp = player.GetComponent<MoveComponent>();
+				moveComp.pos += moveComp.dir * moveComp.currSpeed * dt;
+				moveComp.currSpeed -= moveComp.friction * dt;
+				if(moveComp.currSpeed < 0) moveComp.currSpeed = 0;
+				if(moveComp.pos.x < 0) moveComp.pos.x = 0;
+				if(moveComp.pos.x > World.MAX_X) moveComp.pos.x = World.MAX_X;
+				if(moveComp.pos.y < 0) moveComp.pos.y = 0;
+				if(moveComp.pos.y > World.MAX_Y) moveComp.pos.y = World.MAX_Y;
+			}
 		}
+
 	}
 
 	public override void DoUpdate (float dt)

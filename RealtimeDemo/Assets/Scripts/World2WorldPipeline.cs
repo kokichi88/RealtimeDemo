@@ -21,10 +21,11 @@ public class World2WorldPipeline : MonoBehaviour {
 		{
 			Packet p = inPackets[i];
 			p.ping -= Time.deltaTime;
-			if(p.ping < 0)
+			if(p.ping <= 0)
 			{
 				ServerProcess(p);
 				inPackets.RemoveAt(i);
+				--i;
 			}
 
 		}
@@ -33,10 +34,11 @@ public class World2WorldPipeline : MonoBehaviour {
 		{
 			Packet p = outPackets[i];
 			p.ping -= Time.deltaTime;
-			if(p.ping < 0)
+			if(p.ping <= 0)
 			{
 				ProcessSend(p);
 				outPackets.RemoveAt(i);
+				--i;
 			}
 			
 		}
@@ -87,9 +89,17 @@ public class World2WorldPipeline : MonoBehaviour {
 
 	public class Packet
 	{
+		public static int GEN_ID = 0;
+		public int id;
 		public World sender;
 		public World receiver;
 		public float ping;
 		public World.Message message;
+
+		public Packet()
+		{
+			id = GEN_ID;
+			++GEN_ID;
+		}
 	}
 }
