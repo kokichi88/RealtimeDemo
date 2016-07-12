@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,7 +20,7 @@ public class NetworkServerSystem : AbstractSystem {
 		for(int i = 0; i < world.players.Count; ++i)
 		{
 			MessageList.ActorPos actorPos = new MessageList.ActorPos();
-			Actor actor = world.players[i].GetComponent<Actor>();
+			ActorComponent actor = world.players[i].GetComponent<ActorComponent>();
 			actorPos.id = actor.id;
 			actorPos.pos = world.players[i].GetComponent<MoveComponent>().pos;
 			players.Add(actorPos);

@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class InputSystem : AbstractSystem {
+	public static float DELAY_INPUT = 0.1f;
 	public int ownerId;
-
+	private float count;
+	private Vector3 dir = Vector3.zero;
 	protected override void OnAddedToWorld (World world)
 	{
 		ownerId = world.ownerId;
@@ -21,29 +23,51 @@ public class InputSystem : AbstractSystem {
 
 	public override void DoUpdate (float dt)
 	{
-		Vector3 dir = Vector3.zero;
+
 		if(Input.GetKeyDown(KeyCode.W))
 		{
-			dir.y += 1;
+			dir.y = 1;
+		}
+
+		if(Input.GetKeyUp(KeyCode.W))
+		{
+			dir.y = 0;
 		}
 
 		if(Input.GetKeyDown(KeyCode.S))
 		{
-			dir.y -= 1;
+			dir.y = -1;
+		}
+
+		if(Input.GetKeyUp(KeyCode.S))
+		{
+			dir.y = 0;
 		}
 
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-			dir.x -= 1;
+			dir.x = -1;
+		}
+
+		if(Input.GetKeyUp(KeyCode.A))
+		{
+			dir.x = 0;
 		}
 
 		if(Input.GetKeyDown(KeyCode.D))
 		{
-			dir.x += 1;
+			dir.x = 1;
 		}
 
-		if(dir != Vector3.zero)
+		if(Input.GetKeyUp(KeyCode.D))
 		{
+			dir.x = 0;
+		}
+
+		count -= dt;
+		if(count <= 0)
+		{
+			count = DELAY_INPUT;
 			List<MoveComponent.MoveInput> inputs = new List<MoveComponent.MoveInput>();
 			MoveComponent.MoveInput input = new MoveComponent.MoveInput();
 			input.dir = dir;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -50,8 +50,8 @@ public class World : MonoBehaviour {
 	{
 		GameObject player = GameObject.Instantiate(avatar_prefab) as GameObject;
 		player.name = gameObject.name + "_player_" + genId;;
-		player.GetComponent<Actor>().id = genId;
-		player.GetComponent<Actor>().name = player.name;
+		player.GetComponent<ActorComponent>().id = genId;
+		player.GetComponent<ActorComponent>().name = player.name;
 
 		players.Add(player);
 		++genId;

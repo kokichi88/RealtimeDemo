@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,7 +24,7 @@ public class ClientViewSystem : AbstractSystem {
 				MessageList.ActorPos actorPos = GetActorPosById(world.ownerId, gameState);
 				if(actorPos != null)
 				{
-					Actor actor = world.players[i].GetComponent<Actor>();
+					ActorComponent actor = world.players[i].GetComponent<ActorComponent>();
 					world.players[i].GetComponent<MoveComponent>().pos = actorPos.pos;
 				}
 			}

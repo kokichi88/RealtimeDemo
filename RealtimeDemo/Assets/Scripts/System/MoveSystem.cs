@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -44,7 +44,7 @@ public class MoveSystem : AbstractSystem {
 		{
 			GameObject player = this.world.players[i];
 			MoveComponent moveComp = player.GetComponent<MoveComponent>();
-			Actor actorComp = player.GetComponent<Actor>();
+			ActorComponent actorComp = player.GetComponent<ActorComponent>();
 			MoveComponent.MoveInput input = GetMoveInputById(actorComp.id, inputs);
 			if(input.dir != null)
 			{

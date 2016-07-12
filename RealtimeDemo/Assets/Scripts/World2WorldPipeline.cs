@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class World2WorldPipeline : MonoBehaviour {
-	public float lag = 100f; // ms
+	public float ping = 100f; // ms
 	public List<Packet> inPackets = new List<Packet>();
 	public List<Packet> outPackets = new List<Packet>();
 
@@ -20,8 +20,8 @@ public class World2WorldPipeline : MonoBehaviour {
 		for(int i = 0; i < inPackets.Count; ++i)
 		{
 			Packet p = inPackets[i];
-			p.lag -= Time.deltaTime;
-			if(p.lag < 0)
+			p.ping -= Time.deltaTime;
+			if(p.ping < 0)
 			{
 				ServerProcess(p);
 				inPackets.RemoveAt(i);
@@ -32,8 +32,8 @@ public class World2WorldPipeline : MonoBehaviour {
 		for(int i = 0; i < outPackets.Count; ++i)
 		{
 			Packet p = outPackets[i];
-			p.lag -= Time.deltaTime;
-			if(p.lag < 0)
+			p.ping -= Time.deltaTime;
+			if(p.ping < 0)
 			{
 				ProcessSend(p);
 				outPackets.RemoveAt(i);
@@ -66,7 +66,7 @@ public class World2WorldPipeline : MonoBehaviour {
 	{
 		Packet p = new Packet();
 		p.sender = sender;
-		p.lag = lag/ 1000;
+		p.ping = ping / 1000;
 		p.message = message;
 		inPackets.Add(p);
 	}
@@ -78,7 +78,7 @@ public class World2WorldPipeline : MonoBehaviour {
 			World receiver = receivers[i];
 			Packet p = new Packet();
 			p.receiver = receiver;
-			p.lag = lag/1000;
+			p.ping = ping/1000;
 			p.message = message;
 			outPackets.Add(p);
 		}
@@ -89,7 +89,7 @@ public class World2WorldPipeline : MonoBehaviour {
 	{
 		public World sender;
 		public World receiver;
-		public float lag;
+		public float ping;
 		public World.Message message;
 	}
 }
