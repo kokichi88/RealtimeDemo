@@ -10,7 +10,7 @@ public class AuthoritativeServerClientPredictionMain : AuthoritativeServerMain {
 		GameObject server = GameObject.Instantiate(server_prefab) as GameObject;
 		serverWorld = server.GetComponent<World>();
 		serverWorld.AddSystem(new MoveSystem());
-		serverWorld.AddSystem(new NetworkServerSystem(connector));
+		serverWorld.AddSystem(new NetworkServerSystem(connector, 1f/updateStateTimesPerSecond));
 
 		serverWorld.AddPlayerToWorld();
 		connector.SetServer(serverWorld);

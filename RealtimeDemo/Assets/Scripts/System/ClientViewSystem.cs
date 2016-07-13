@@ -14,13 +14,14 @@ public class ClientViewSystem : AbstractSystem {
 
 	}
 
-	public override void ProcessMessage (World.Message message)
+	public override void ProcessMessage (MessageList.Message message)
 	{
 		if(world.mode == World.Mode.ON_LINE)
 		{
-			if(message is MessageList.UpdateStateMessage)
+			if(message.cmdId == MessageList.CMD_UPDATE_GAME_STATE)
 			{
-				List<MessageList.ActorPos> gameState = message.content as List<MessageList.ActorPos>;
+				MessageList.UpdateStateMessage updateStateMsg = message  as MessageList.UpdateStateMessage;
+				List<MessageList.ActorPos> gameState = updateStateMsg.content;
 				for(int i = 0; i < world.players.Count; ++i)
 				{
 					MessageList.ActorPos actorPos = GetActorPosById(world.ownerId, gameState);

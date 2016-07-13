@@ -29,7 +29,7 @@ public class World : MonoBehaviour {
 	public List<GameObject> players = new List<GameObject>();
 	private GameObject map;
 	private List<AbstractSystem> systems = new List<AbstractSystem>();
-	private List<Message> messages = new List<Message>();
+	private List<MessageList.Message> messages = new List<MessageList.Message>();
 	private int genId = 0;
 	private float lastTime;
 	private float stackTime;
@@ -73,12 +73,12 @@ public class World : MonoBehaviour {
 		system.OnAdd(this);
 	}
 
-	public void AddMessage(Message message)
+	public void AddMessage(MessageList.Message message)
 	{
 		messages.Add(message);
 	}
 
-	public void ProcessServerMessage(Message message)
+	public void ProcessServerMessage(MessageList.Message message)
 	{
 		for(int j = 0; j < systems.Count; ++j)
 		{
@@ -88,21 +88,22 @@ public class World : MonoBehaviour {
 
 	void Update()
 	{
-		float curTime = Time.realtimeSinceStartup;
-		stackTime += curTime - lastTime;
-		lastTime = curTime;
-		while(stackTime >= frameTime)
+		if(frameTime > 0)
 		{
-			stackTime -= frameTime;
-			DoUpdate(frameTime);
+			float curTime = Time.realtimeSinceStartup;
+			stackTime += curTime - lastTime;
+			lastTime = curTime;
+			while(stackTime >= frameTime)
+			{
+				stackTime -= frameTime;
+				DoUpdate(frameTime);
+			}
+			
+			for(int i = 0; i < systems.Count; ++i)
+			{
+				systems[i].DoUpdate(Time.deltaTime);
+			}
 		}
-
-		for(int i = 0; i < systems.Count; ++i)
-		{
-			systems[i].DoUpdate(Time.deltaTime);
-		}
-
-
 	}
 
 
@@ -130,9 +131,5 @@ public class World : MonoBehaviour {
 	}
 
 
-	public class Message
-	{
-		public int activeFrame;
-		public object content;
-	}
+
 }

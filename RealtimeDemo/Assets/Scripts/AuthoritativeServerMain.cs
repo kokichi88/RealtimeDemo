@@ -3,10 +3,9 @@ using System.Collections;
 
 public class AuthoritativeServerMain : MonoBehaviour {
 	public GameObject client_prefab;
-	public float clientFrameTime = 0.02f;
-
+	public float frameTime = 0.02f;
+	public int updateStateTimesPerSecond = 10;
 	public GameObject server_prefab;
-	public float serverFrameTime = 0.1f;
 
 	protected World serverWorld;
 
@@ -19,7 +18,7 @@ public class AuthoritativeServerMain : MonoBehaviour {
 		GameObject server = GameObject.Instantiate(server_prefab) as GameObject;
 		serverWorld = server.GetComponent<World> ();
 		serverWorld.AddSystem(new MoveSystem());
-		serverWorld.AddSystem(new NetworkServerSystem(connector));
+		serverWorld.AddSystem(new NetworkServerSystem(connector, 1f/updateStateTimesPerSecond));
 
 		serverWorld.AddPlayerToWorld();
 		connector.SetServer(serverWorld);
@@ -37,7 +36,14 @@ public class AuthoritativeServerMain : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		serverWorld.frameTime = serverFrameTime;
-		clientWorld.frameTime = clientFrameTime;
+		serverWorld.frameTime = frameTime;
+		clientWorld.frameTime = frameTime;
+
+		if(updateStateTimesPerSecond > 0)
+		{
+			MessageList.Message msg = new MessageList.ChangeServerUpdateTime(1f/ updateStateTimesPerSecond);
+			msg.activeFrame = serverWorld.currentFrame + 1;
+			serverWorld.AddMessage(msg);
+		}
 	}
 }

@@ -34,11 +34,11 @@ public class MoveSystem : AbstractSystem {
 		}
 	}
 
-	public override void ProcessMessage (World.Message message)
+	public override void ProcessMessage (MessageList.Message message)
 	{
-		if(message is MessageList.InputMessage)
+		if(message.cmdId ==  MessageList.CMD_USER_INPUT)
 		{
-			ProcessMoveInput(message.content as List<MoveComponent.MoveInput>);
+			ProcessMoveInput((message as MessageList.InputMessage).content);
 		}
 	}
 

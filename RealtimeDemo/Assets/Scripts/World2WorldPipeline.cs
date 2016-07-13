@@ -46,7 +46,7 @@ public class World2WorldPipeline : MonoBehaviour {
 
 	void ServerProcess(Packet p)
 	{
-		if(p.message is MessageList.SendInputMessage){
+		if(p.message.cmdId == MessageList.CMD_SEND_INPUT_2_SERVER){
 			MessageList.SendInputMessage sim = (MessageList.SendInputMessage)p.message;
 			MessageList.InputMessage message = new MessageList.InputMessage(sim.content as List<MoveComponent.MoveInput>);
 			message.activeFrame = server.currentFrame + 1;
@@ -64,7 +64,7 @@ public class World2WorldPipeline : MonoBehaviour {
 		clients.Add(world);
 	}
 
-	public void Send2Server(World sender, World.Message message)
+	public void Send2Server(World sender, MessageList.Message message)
 	{
 		Packet p = new Packet();
 		p.sender = sender;
@@ -73,7 +73,7 @@ public class World2WorldPipeline : MonoBehaviour {
 		inPackets.Add(p);
 	}
 
-	public void Send2Client(List<World> receivers, World.Message message)
+	public void Send2Client(List<World> receivers, MessageList.Message message)
 	{
 		for(int i = 0; i < receivers.Count; ++i)
 		{
@@ -94,7 +94,7 @@ public class World2WorldPipeline : MonoBehaviour {
 		public World sender;
 		public World receiver;
 		public float ping;
-		public World.Message message;
+		public MessageList.Message message;
 
 		public Packet()
 		{

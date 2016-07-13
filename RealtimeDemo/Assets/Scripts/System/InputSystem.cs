@@ -16,7 +16,7 @@ public class InputSystem : AbstractSystem {
 	{
 	}
 
-	public override void ProcessMessage (World.Message message)
+	public override void ProcessMessage (MessageList.Message message)
 	{
 
 	}
@@ -80,13 +80,13 @@ public class InputSystem : AbstractSystem {
 			switch(world.mode)
 			{
 			case World.Mode.OFF_LINE:
-				World.Message msg = new MessageList.InputMessage(inputs);
+				MessageList.InputMessage msg = new MessageList.InputMessage(inputs);
 				msg.activeFrame = this.world.currentFrame + 1;
 				msg.content = inputs;
 				world.AddMessage(msg);
 				break;
 			case World.Mode.ON_LINE:
-				World.Message msg2 = new MessageList.SendInputMessage(inputs);
+				MessageList.SendInputMessage msg2 = new MessageList.SendInputMessage(inputs);
 				msg2.activeFrame = this.world.currentFrame + 1;
 				msg2.content = inputs;
 				world.AddMessage(msg2);

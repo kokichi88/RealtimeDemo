@@ -23,9 +23,9 @@ public class NetworkClientSystem : AbstractSystem {
 
 	}
 
-	public override void ProcessMessage (World.Message message)
+	public override void ProcessMessage (MessageList.Message message)
 	{
-		if(message is MessageList.SendInputMessage)
+		if(message.cmdId == MessageList.CMD_SEND_INPUT_2_SERVER)
 		{
 			connector.Send2Server(this.world, message);
 		}

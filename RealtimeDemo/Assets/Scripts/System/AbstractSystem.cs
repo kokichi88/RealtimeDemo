@@ -14,5 +14,5 @@ public abstract class AbstractSystem {
 	protected virtual void OnAddedToWorld(World world){}
 	public abstract void DoFixedUpdate(float dt);
 	public abstract void DoUpdate(float dt);
-	public abstract void ProcessMessage(World.Message message);
+	public abstract void ProcessMessage(MessageList.Message message);
 }

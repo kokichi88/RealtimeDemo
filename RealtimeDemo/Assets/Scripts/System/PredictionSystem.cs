@@ -24,11 +24,11 @@ public class PredictionSystem : MoveSystem {
 	}
 
 
-	public override void ProcessMessage (World.Message message)
+	public override void ProcessMessage (MessageList.Message message)
 	{
-		if(message is MessageList.SendInputMessage)
+		if(message.cmdId ==  MessageList.CMD_SEND_INPUT_2_SERVER)
 		{
-			ProcessMoveInput(message.content as List<MoveComponent.MoveInput>);
+			ProcessMoveInput((message as MessageList.SendInputMessage).content);
 		}
 	}
 }
