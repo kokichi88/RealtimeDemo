@@ -21,10 +21,10 @@ public class ClientViewSystem : AbstractSystem {
 			if(message.cmdId == MessageList.CMD_UPDATE_GAME_STATE)
 			{
 				MessageList.UpdateStateMessage updateStateMsg = message  as MessageList.UpdateStateMessage;
-				List<MessageList.ActorPos> gameState = updateStateMsg.content;
+				List<MessageList.ActorData> gameState = updateStateMsg.content;
 				for(int i = 0; i < world.players.Count; ++i)
 				{
-					MessageList.ActorPos actorPos = GetActorPosById(world.ownerId, gameState);
+					MessageList.ActorData actorPos = GetActorPosById(world.ownerId, gameState);
 					if(actorPos != null)
 					{
 						ActorComponent actor = world.players[i].GetComponent<ActorComponent>();
@@ -36,7 +36,7 @@ public class ClientViewSystem : AbstractSystem {
 		}
 	}
 
-	private MessageList.ActorPos GetActorPosById(int id, List<MessageList.ActorPos> poses)
+	private MessageList.ActorData GetActorPosById(int id, List<MessageList.ActorData> poses)
 	{
 		for(int i = 0; i < poses.Count; ++i)
 		{

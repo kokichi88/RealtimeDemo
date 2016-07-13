@@ -48,8 +48,9 @@ public class World2WorldPipeline : MonoBehaviour {
 	{
 		if(p.message.cmdId == MessageList.CMD_SEND_INPUT_2_SERVER){
 			MessageList.SendInputMessage sim = (MessageList.SendInputMessage)p.message;
-			MessageList.InputMessage message = new MessageList.InputMessage(sim.content as List<MoveComponent.MoveInput>);
+			MessageList.InputMessage message = new MessageList.InputMessage(sim.content);
 			message.activeFrame = server.currentFrame + 1;
+			message.inputId = sim.inputId;
 			server.AddMessage(message);
 		}
 	}

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -71,24 +71,20 @@ public class InputSystem : AbstractSystem {
 		if(count <= 0)
 		{
 			count = DELAY_INPUT;
-			List<MoveComponent.MoveInput> inputs = new List<MoveComponent.MoveInput>();
 			MoveComponent.MoveInput input = new MoveComponent.MoveInput();
 			input.dir = new Vector3(dir.x, dir.y, dir.z);
-			input.id = ownerId;
-			inputs.Add(input);
+			input.actorId = ownerId;
 
 			switch(world.mode)
 			{
 			case World.Mode.OFF_LINE:
-				MessageList.InputMessage msg = new MessageList.InputMessage(inputs);
+				MessageList.InputMessage msg = new MessageList.InputMessage(input);
 				msg.activeFrame = this.world.currentFrame + 1;
-				msg.content = inputs;
 				world.AddMessage(msg);
 				break;
 			case World.Mode.ON_LINE:
-				MessageList.SendInputMessage msg2 = new MessageList.SendInputMessage(inputs);
+				MessageList.SendInputMessage msg2 = new MessageList.SendInputMessage(input);
 				msg2.activeFrame = this.world.currentFrame + 1;
-				msg2.content = inputs;
 				world.AddMessage(msg2);
 				break;
 			}

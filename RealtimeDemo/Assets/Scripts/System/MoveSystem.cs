@@ -42,30 +42,18 @@ public class MoveSystem : AbstractSystem {
 		}
 	}
 
-	protected void ProcessMoveInput(List<MoveComponent.MoveInput> inputs)
+	protected void ProcessMoveInput(MoveComponent.MoveInput input)
 	{
-		for(int i = 0; i < this.world.players.Count; ++i)
+	
+		GameObject player = this.world.GetPlayerById(input.actorId);
+		if(player != null)
 		{
-			GameObject player = this.world.players[i];
 			MoveComponent moveComp = player.GetComponent<MoveComponent>();
 			ActorComponent actorComp = player.GetComponent<ActorComponent>();
-			MoveComponent.MoveInput input = GetMoveInputById(actorComp.id, inputs);
-			if(input.dir != null)
-			{
-				moveComp.dir = input.dir;
-				moveComp.currSpeed = moveComp.speed;
-			}
+			moveComp.dir = input.dir;
+			moveComp.currSpeed = moveComp.speed;
+			moveComp.lastInputProcessed = input.inputId;
 		}
-
 	}
 
-	private MoveComponent.MoveInput GetMoveInputById(int id, List<MoveComponent.MoveInput> inputs)
-	{
-		for(int i = 0; i< inputs.Count; ++i)
-		{
-			if(inputs[i].id == id)
-				return inputs[i];
-		}
-		return null;
-	}
 }

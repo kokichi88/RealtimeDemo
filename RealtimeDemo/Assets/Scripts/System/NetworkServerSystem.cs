@@ -23,15 +23,15 @@ public class NetworkServerSystem : AbstractSystem {
 		if(count <= 0)
 		{
 			count += sendUpdateTime;
-			List<MessageList.ActorPos> players = new List<MessageList.ActorPos>();
+			List<MessageList.ActorData> players = new List<MessageList.ActorData>();
 			for(int i = 0; i < world.players.Count; ++i)
 			{
-				MessageList.ActorPos actorPos = new MessageList.ActorPos();
+				MessageList.ActorData actorData = new MessageList.ActorData();
 				ActorComponent actor = world.players[i].GetComponent<ActorComponent>();
-				actorPos.id = actor.id;
-				actorPos.pos = world.players[i].GetComponent<MoveComponent>().pos;
-				actorPos.pos = new Vector3(actorPos.pos.x, actorPos.pos.y, actorPos.pos.z);
-				players.Add(actorPos);
+				actorData.id = actor.id;
+				actorData.pos = world.players[i].GetComponent<MoveComponent>().pos;
+				actorData.lastProcessedInput = world.players[i].GetComponent<MoveComponent>().lastInputProcessed;
+				players.Add(actorData);
 				//			Debug.Log(string.Format("{0} {1} y : {2}", this.world.currentFrame ,this.world.role, 
 				//			                        world.players[i].GetComponent<MoveComponent>().pos.y));
 				
@@ -51,7 +51,6 @@ public class NetworkServerSystem : AbstractSystem {
 		if(message.cmdId == MessageList.CMD_SERVER_SEND_UPDATE_TIME)
 		{
 			sendUpdateTime = (message as MessageList.ChangeServerUpdateTime).frameTime;
-			Debug.Log("update frame time " + sendUpdateTime);
 		}
 	}
 }

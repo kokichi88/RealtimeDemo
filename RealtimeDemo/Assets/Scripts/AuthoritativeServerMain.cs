@@ -3,9 +3,11 @@ using System.Collections;
 
 public class AuthoritativeServerMain : MonoBehaviour {
 	public GameObject client_prefab;
-	public float frameTime = 0.02f;
-	public int updateStateTimesPerSecond = 10;
+	public float frameTimeClient = 0.02f;
+
 	public GameObject server_prefab;
+	public float frameTimeServer = 0.02f;
+	public int updateStateTimesPerSecond = 10;
 
 	protected World serverWorld;
 
@@ -36,8 +38,8 @@ public class AuthoritativeServerMain : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		serverWorld.frameTime = frameTime;
-		clientWorld.frameTime = frameTime;
+		serverWorld.frameTime = frameTimeServer;
+		clientWorld.frameTime = frameTimeClient;
 
 		if(updateStateTimesPerSecond > 0)
 		{

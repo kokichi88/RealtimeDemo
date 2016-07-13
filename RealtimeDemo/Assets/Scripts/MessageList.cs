@@ -17,28 +17,35 @@ public class MessageList{
 
 	public class InputMessage : Message
 	{
-		public List<MoveComponent.MoveInput> content;
-		public InputMessage (List<MoveComponent.MoveInput> inputs)
+
+		public MoveComponent.MoveInput content;
+		public int inputId;
+		public InputMessage (MoveComponent.MoveInput input)
 		{
 			cmdId = CMD_USER_INPUT;
-			this.content = inputs; 
+			this.content = input; 
 		}
 	}
 
 	public class SendInputMessage : Message
 	{
-		public List<MoveComponent.MoveInput> content;
-		public SendInputMessage (List<MoveComponent.MoveInput> inputs)
+		public static int GEN_ID = 0;
+		public int inputId;
+		public MoveComponent.MoveInput content;
+		public SendInputMessage (MoveComponent.MoveInput input)
 		{
 			cmdId = CMD_SEND_INPUT_2_SERVER;
-			this.content = inputs; 
+			inputId = ++GEN_ID;
+			this.content = input; 
+			this.content.inputId = this.inputId;
 		}
 	}
 
 	public class UpdateStateMessage : Message
 	{
-		public List<ActorPos> content;
-		public UpdateStateMessage(List<ActorPos> players)
+		public List<ActorData> content;
+		public int lastInputProcessed;
+		public UpdateStateMessage(List<ActorData> players)
 		{
 			cmdId = CMD_UPDATE_GAME_STATE;
 			this.content = players;
@@ -55,9 +62,10 @@ public class MessageList{
 		}
 	}
 
-	public class ActorPos
+	public class ActorData
 	{
 		public int id;
+		public int lastProcessedInput;
 		public Vector3 pos;
 	}
 
