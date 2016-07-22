@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class World2WorldPipeline : MonoBehaviour {
-	public float ping = 100f; // ms
+	public float lag = 100f; // ms
 	public List<Packet> inPackets = new List<Packet>();
 	public List<Packet> outPackets = new List<Packet>();
 
@@ -69,7 +69,7 @@ public class World2WorldPipeline : MonoBehaviour {
 	{
 		Packet p = new Packet();
 		p.sender = sender;
-		p.ping = ping / 1000;
+		p.ping = lag / 1000;
 		p.message = message;
 		inPackets.Add(p);
 	}
@@ -81,7 +81,7 @@ public class World2WorldPipeline : MonoBehaviour {
 			World receiver = receivers[i];
 			Packet p = new Packet();
 			p.receiver = receiver;
-			p.ping = ping/1000;
+			p.ping = lag/1000;
 			p.message = message;
 			outPackets.Add(p);
 		}

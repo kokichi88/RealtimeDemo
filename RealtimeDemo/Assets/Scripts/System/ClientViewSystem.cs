@@ -24,24 +24,23 @@ public class ClientViewSystem : AbstractSystem {
 				List<MessageList.ActorData> gameState = updateStateMsg.content;
 				for(int i = 0; i < world.players.Count; ++i)
 				{
-					MessageList.ActorData actorPos = GetActorPosById(world.ownerId, gameState);
-					if(actorPos != null)
+					ActorComponent actor = world.players[i].GetComponent<ActorComponent>();
+					MessageList.ActorData actorPos = GetActorDataById(actor.id, gameState);
+					if(actorPos != null && actor.id != world.ownerId)
 					{
-						ActorComponent actor = world.players[i].GetComponent<ActorComponent>();
 						world.players[i].GetComponent<MoveComponent>().pos = actorPos.pos;
-//						Debug.Log(string.Format("{0} {1} y : {2}", Time.realtimeSinceStartup,this.world.role, actorPos.pos.y));
 					}
 				}
 			}
 		}
 	}
 
-	private MessageList.ActorData GetActorPosById(int id, List<MessageList.ActorData> poses)
+	public static MessageList.ActorData GetActorDataById(int id, List<MessageList.ActorData> actorDatas)
 	{
-		for(int i = 0; i < poses.Count; ++i)
+		for(int i = 0; i < actorDatas.Count; ++i)
 		{
-			if(id == poses[i].id)
-				return poses[i];
+			if(id == actorDatas[i].id)
+				return actorDatas[i];
 		}
 		return null;
 	}

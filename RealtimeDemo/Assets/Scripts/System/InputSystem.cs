@@ -68,23 +68,23 @@ public class InputSystem : AbstractSystem {
 
 
 		count -= dt;
-		if(count <= 0)
+		if(count <= 0 && (dir.x + dir.y + dir.z) != 0)
 		{
 			count = DELAY_INPUT;
 			MoveComponent.MoveInput input = new MoveComponent.MoveInput();
 			input.dir = new Vector3(dir.x, dir.y, dir.z);
 			input.actorId = ownerId;
-
+			input.activeFrame = this.world.currentFrame + 1;
 			switch(world.mode)
 			{
 			case World.Mode.OFF_LINE:
 				MessageList.InputMessage msg = new MessageList.InputMessage(input);
-				msg.activeFrame = this.world.currentFrame + 1;
+				msg.activeFrame = input.activeFrame;
 				world.AddMessage(msg);
 				break;
 			case World.Mode.ON_LINE:
 				MessageList.SendInputMessage msg2 = new MessageList.SendInputMessage(input);
-				msg2.activeFrame = this.world.currentFrame + 1;
+				msg2.activeFrame = input.activeFrame;
 				world.AddMessage(msg2);
 				break;
 			}

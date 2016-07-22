@@ -18,6 +18,9 @@ public class PredictionSystem : MoveSystem {
 				if(moveComp.pos.x > World.MAX_X) moveComp.pos.x = World.MAX_X;
 				if(moveComp.pos.y < 0) moveComp.pos.y = 0;
 				if(moveComp.pos.y > World.MAX_Y) moveComp.pos.y = World.MAX_Y;
+				if(moveComp.currSpeed != 0)
+					Debug.Log(string.Format("[Prediction system] frame {0} has pos {1} and speed {2}", world.currentFrame, 
+					                        moveComp.pos, moveComp.currSpeed));
 			}
 		}
 		
@@ -28,7 +31,15 @@ public class PredictionSystem : MoveSystem {
 	{
 		if(message.cmdId ==  MessageList.CMD_SEND_INPUT_2_SERVER)
 		{
-			ProcessMoveInput((message as MessageList.SendInputMessage).content);
+			MessageList.SendInputMessage sim = message as MessageList.SendInputMessage;
+			GameObject player = this.world.GetPlayerById(sim.content.actorId);
+			if(player != null)
+			{
+				MoveComponent moveComp = player.GetComponent<MoveComponent>();
+
+			}
+			ProcessMoveInput(sim.content);
+			Debug.Log(string.Format("[Client predict input {0}] Process input frame {1} has dir {2}",sim.inputId, world.currentFrame, sim.content.dir));
 		}
 	}
 }

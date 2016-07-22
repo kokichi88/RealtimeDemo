@@ -24,7 +24,7 @@ public class World : MonoBehaviour {
 	public int currentFrame;
 	public Mode mode;
 	public Role role;
-
+	public float lag = 100;
 	public int ownerId = 0;
 	public List<GameObject> players = new List<GameObject>();
 	private GameObject map;

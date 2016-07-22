@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class MessageList{
-	public static int CMD_USER_INPUT = 1;
-	public static int CMD_SEND_INPUT_2_SERVER = 2;
-	public static int CMD_UPDATE_GAME_STATE = 3;
-	public static int CMD_SERVER_SEND_UPDATE_TIME = 4;
+	public const int CMD_USER_INPUT = 1;
+	public const int CMD_SEND_INPUT_2_SERVER = 2;
+	public const int CMD_UPDATE_GAME_STATE = 3;
+	public const int CMD_SERVER_SEND_UPDATE_TIME = 4;
 
 
 	public class Message
@@ -44,11 +44,12 @@ public class MessageList{
 	public class UpdateStateMessage : Message
 	{
 		public List<ActorData> content;
-		public int lastInputProcessed;
-		public UpdateStateMessage(List<ActorData> players)
+		public int serverFrame;
+		public UpdateStateMessage(List<ActorData> players, int serverFrame)
 		{
 			cmdId = CMD_UPDATE_GAME_STATE;
 			this.content = players;
+			this.serverFrame = serverFrame;
 		}
 	}
 
@@ -65,8 +66,10 @@ public class MessageList{
 	public class ActorData
 	{
 		public int id;
-		public int lastProcessedInput;
+		public List<int> lastProcessedInputs;
 		public Vector3 pos;
+		public float currentSpeed;
+		public Vector3 dir;
 	}
 
 }

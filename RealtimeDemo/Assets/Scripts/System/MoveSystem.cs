@@ -44,15 +44,17 @@ public class MoveSystem : AbstractSystem {
 
 	protected void ProcessMoveInput(MoveComponent.MoveInput input)
 	{
-	
 		GameObject player = this.world.GetPlayerById(input.actorId);
 		if(player != null)
 		{
 			MoveComponent moveComp = player.GetComponent<MoveComponent>();
-			ActorComponent actorComp = player.GetComponent<ActorComponent>();
 			moveComp.dir = input.dir;
 			moveComp.currSpeed = moveComp.speed;
-			moveComp.lastInputProcessed = input.inputId;
+			if(this.world.role == World.Role.SERVER) {
+				moveComp.lastProcessedInputs.Add(input.inputId);
+				Debug.Log(string.Format("[Server process input {0} from client] server's frame {1}  has pos {2}", 
+				                        input.inputId, world.currentFrame, moveComp.pos));
+			}
 		}
 	}
 
