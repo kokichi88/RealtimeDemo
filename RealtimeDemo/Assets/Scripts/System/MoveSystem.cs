@@ -12,8 +12,13 @@ public class MoveSystem : AbstractSystem {
 			{
 				GameObject player = this.world.players[i];
 				MoveComponent moveComp = player.GetComponent<MoveComponent>();
-				moveComp.pos += moveComp.dir * moveComp.currSpeed * dt;
-				moveComp.currSpeed -= moveComp.friction * dt;
+				for(int j = 0; j < moveComp.queueMoves.Count; ++j)
+				{
+					moveComp.pos += moveComp.queueMoves[j].vec * dt;
+				}
+				moveComp.lastProcessedMoves.AddRange(moveComp.queueMoves);
+				moveComp.queueMoves.Clear();
+//				moveComp.currSpeed -= moveComp.friction * dt;
 				if(moveComp.currSpeed < 0) moveComp.currSpeed = 0;
 				if(moveComp.pos.x < 0) moveComp.pos.x = 0;
 				if(moveComp.pos.x > World.MAX_X) moveComp.pos.x = World.MAX_X;
@@ -36,9 +41,17 @@ public class MoveSystem : AbstractSystem {
 
 	public override void ProcessMessage (MessageList.Message message)
 	{
-		if(message.cmdId ==  MessageList.CMD_USER_INPUT)
+		switch(message.cmdId)
 		{
+		case MessageList.CMD_USER_INPUT:
 			ProcessMoveInput((message as MessageList.InputMessage).content);
+			break;
+		case MessageList.CMD_SEND_INPUT_2_SERVER:
+			MessageList.MoveMessage moveMsg = message as MessageList.MoveMessage;
+			GameObject player = this.world.GetPlayerById(moveMsg.actorId);
+			MoveComponent moveComp = player.GetComponent<MoveComponent>();
+			moveComp.queueMoves.Add(moveMsg);
+			break;
 		}
 	}
 
@@ -50,11 +63,7 @@ public class MoveSystem : AbstractSystem {
 			MoveComponent moveComp = player.GetComponent<MoveComponent>();
 			moveComp.dir = input.dir;
 			moveComp.currSpeed = moveComp.speed;
-			if(this.world.role == World.Role.SERVER) {
-				moveComp.lastProcessedInputs.Add(input.inputId);
-				Debug.Log(string.Format("[Server process input {0} from client] server's frame {1}  has pos {2}", 
-				                        input.inputId, world.currentFrame, moveComp.pos));
-			}
+
 		}
 	}
 

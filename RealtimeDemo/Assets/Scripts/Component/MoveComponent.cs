@@ -6,8 +6,10 @@ public class MoveComponent : MonoBehaviour {
 	public float speed;
 	public Vector3 dir;
 	public float friction;
-	public List<int> lastProcessedInputs = new List<int>();
-	public List<MoveComponent.MoveInput> queueInputs = new List<MoveComponent.MoveInput>();
+	public List<MessageList.MoveMessage> lastProcessedMoves = new List<MessageList.MoveMessage>();
+	public List<MessageList.MoveMessage> queueMoves = new List<MessageList.MoveMessage>();
+	public List<Vector3> savedPoses = new List<Vector3>();
+	public float step = 0;
 	public float currSpeed;
 	public Vector3 pos;
 

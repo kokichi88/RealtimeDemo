@@ -32,8 +32,8 @@ public class NetworkServerSystem : AbstractSystem {
 				actorData.pos = world.players[i].GetComponent<MoveComponent>().pos + Vector3.zero;
 				actorData.dir = world.players[i].GetComponent<MoveComponent>().dir;
 				actorData.currentSpeed = world.players[i].GetComponent<MoveComponent>().currSpeed;
-				actorData.lastProcessedInputs = new List<int>(world.players[i].GetComponent<MoveComponent>().lastProcessedInputs);
-				world.players[i].GetComponent<MoveComponent>().lastProcessedInputs.Clear();
+				actorData.lastProcessedMoves = new List<MessageList.MoveMessage>(world.players[i].GetComponent<MoveComponent>().lastProcessedMoves);
+				world.players[i].GetComponent<MoveComponent>().lastProcessedMoves.Clear();
 				players.Add(actorData);
 				//			Debug.Log(string.Format("{0} {1} y : {2}", this.world.currentFrame ,this.world.role, 
 				//			                        world.players[i].GetComponent<MoveComponent>().pos.y));

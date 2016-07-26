@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -47,11 +47,8 @@ public class World2WorldPipeline : MonoBehaviour {
 	void ServerProcess(Packet p)
 	{
 		if(p.message.cmdId == MessageList.CMD_SEND_INPUT_2_SERVER){
-			MessageList.SendInputMessage sim = (MessageList.SendInputMessage)p.message;
-			MessageList.InputMessage message = new MessageList.InputMessage(sim.content);
-			message.activeFrame = server.currentFrame + 1;
-			message.inputId = sim.inputId;
-			server.AddMessage(message);
+			MessageList.MoveMessage mm = (MessageList.MoveMessage)p.message;
+			server.ProcessServerMessage(mm);
 		}
 	}
 

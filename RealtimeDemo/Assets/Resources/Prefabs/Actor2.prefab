@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11492112}
   - 114: {fileID: 11475600}
   m_Layer: 0
-  m_Name: Actor
+  m_Name: Actor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: a77416536911a43f4ba8b45ef97fedf7, type: 2}
+  - {fileID: 2100000, guid: 3f56f89c8b6c94e5cb98a964cf6834cf, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -70,9 +70,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b905fcb908f4c029dfa996ff32a670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   dir: {x: 0, y: 0, z: 0}
-  friction: 10
+  friction: 7
   savedPoses: []
   step: 0
   currSpeed: 0

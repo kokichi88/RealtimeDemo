@@ -8,7 +8,7 @@ public class AuthoritativeServerMain : MonoBehaviour {
 	public GameObject server_prefab;
 	public float frameTimeServer = 0.02f;
 	public int updateStateTimesPerSecond = 10;
-
+	public int interpolation_step = 20;
 	protected World serverWorld;
 
 	protected World clientWorld;
@@ -30,7 +30,7 @@ public class AuthoritativeServerMain : MonoBehaviour {
 		clientWorld.AddSystem(new MoveSystem());
 		clientWorld.AddSystem(new InputSystem());
 		clientWorld.AddSystem(new NetworkClientSystem(connector));
-		clientWorld.AddSystem(new ClientViewSystem());
+		clientWorld.AddSystem(new ClientInterpolationSystem());
 		clientWorld.AddPlayerToWorld();
 		connector.AddClients(clientWorld);
 

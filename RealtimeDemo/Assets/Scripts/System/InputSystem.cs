@@ -83,7 +83,7 @@ public class InputSystem : AbstractSystem {
 				world.AddMessage(msg);
 				break;
 			case World.Mode.ON_LINE:
-				MessageList.SendInputMessage msg2 = new MessageList.SendInputMessage(input);
+				MessageList.PredictionInputMessage msg2 = new MessageList.PredictionInputMessage(input);
 				msg2.activeFrame = input.activeFrame;
 				world.AddMessage(msg2);
 				break;

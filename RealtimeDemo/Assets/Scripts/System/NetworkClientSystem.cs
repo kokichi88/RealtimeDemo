@@ -29,7 +29,28 @@ public class NetworkClientSystem : AbstractSystem {
 		{
 			connector.Send2Server(this.world, message);
 		}
-
+		if(world.mode == World.Mode.ON_LINE)
+		{
+			if(message.cmdId == MessageList.CMD_UPDATE_GAME_STATE)
+			{
+				MessageList.UpdateStateMessage updateStateMsg = message  as MessageList.UpdateStateMessage;
+				List<MessageList.ActorData> gameState = updateStateMsg.content;
+				for(int i = 0; i < world.players.Count; ++i)
+				{
+					ActorComponent actor = world.players[i].GetComponent<ActorComponent>();
+					MessageList.ActorData actorPos = ClientInterpolationSystem.GetActorDataById(actor.id, gameState);
+					if(actorPos != null && actor.id != world.ownerId)
+					{
+						MoveComponent moveComp = world.players[i].GetComponent<MoveComponent>();
+						moveComp.savedPoses.Add(actorPos.pos);
+						if(moveComp.savedPoses.Count > 2){
+							moveComp.step = 0;
+							moveComp.savedPoses.RemoveAt(0);
+						}
+					}
+				}
+			}
+		}
 
 	}
 

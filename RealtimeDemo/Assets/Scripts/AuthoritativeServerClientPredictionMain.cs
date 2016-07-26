@@ -20,10 +20,13 @@ public class AuthoritativeServerClientPredictionMain : AuthoritativeServerMain {
 		clientWorld.AddSystem(new PredictionSystem());
 		clientWorld.AddSystem(new InputSystem());
 		clientWorld.AddSystem(new NetworkClientSystem(connector));
-		clientWorld.AddSystem(new ClientViewSystem());
+		clientWorld.AddSystem(new ClientInterpolationSystem());
 		clientWorld.AddPlayerToWorld();
 		connector.AddClients(clientWorld);
 
 	}
+
+
+
 	
 }

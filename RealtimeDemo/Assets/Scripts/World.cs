@@ -48,11 +48,16 @@ public class World : MonoBehaviour {
 
 	public void AddPlayerToWorld()
 	{
-		GameObject player = GameObject.Instantiate(avatar_prefab) as GameObject;
+		AddPlayerToWorld(avatar_prefab);
+	}
+
+	public void AddPlayerToWorld(GameObject prefab)
+	{
+		GameObject player = GameObject.Instantiate(prefab) as GameObject;
 		player.name = gameObject.name + "_player_" + genId;;
 		player.GetComponent<ActorComponent>().id = genId;
 		player.GetComponent<ActorComponent>().name = player.name;
-
+		
 		players.Add(player);
 		++genId;
 	}
