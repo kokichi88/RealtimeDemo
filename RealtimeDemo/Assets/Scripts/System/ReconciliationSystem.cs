@@ -54,7 +54,8 @@ public class ReconciliationSystem : AbstractSystem {
 								actorData.lastProcessedInputs.RemoveAt(j);
 								--i;
 								--j;
-								
+								if( i < 0)
+									break;
 							}
 						}
 
