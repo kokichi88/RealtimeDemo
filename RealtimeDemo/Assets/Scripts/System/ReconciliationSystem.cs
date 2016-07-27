@@ -56,13 +56,7 @@ public class ReconciliationSystem : AbstractSystem {
 								lastInputProcessedFrame = updateStateMsg.serverFrame;
 								queueMoves.RemoveAt(j);
 								--j;
-								found = true;
 							}
-						}
-						if(found)
-						{
-							actorData.lastProcessedMoves.RemoveAt(i);
-							--i;
 						}
 
 					}
