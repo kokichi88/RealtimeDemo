@@ -9,10 +9,13 @@ public class World2WorldPipeline : MonoBehaviour {
 
 	public List<World> clients = new List<World>();
 	public World server;
+	public int packetLossPercent = 0;
+	public int packetLoseOrderPercent = 0;
 
 	public void SetServer(World server)
 	{
 		this.server = server;
+		Random.seed = System.DateTime.UtcNow.Millisecond;
 	}
 
 	void Update()
@@ -64,23 +67,29 @@ public class World2WorldPipeline : MonoBehaviour {
 
 	public void Send2Server(World sender, MessageList.Message message)
 	{
-		Packet p = new Packet();
-		p.sender = sender;
-		p.ping = lag / 1000;
-		p.message = message;
-		inPackets.Add(p);
+		if(Random.Range(0,100) >= packetLossPercent)
+		{
+			Packet p = new Packet();
+			p.sender = sender;
+			p.ping = lag / 1000;
+			p.message = message;
+			inPackets.Add(p);
+		}
 	}
 
 	public void Send2Client(List<World> receivers, MessageList.Message message)
 	{
 		for(int i = 0; i < receivers.Count; ++i)
 		{
-			World receiver = receivers[i];
-			Packet p = new Packet();
-			p.receiver = receiver;
-			p.ping = lag/1000;
-			p.message = message;
-			outPackets.Add(p);
+			if(Random.Range(0,100) >= packetLossPercent)
+			{
+				World receiver = receivers[i];
+				Packet p = new Packet();
+				p.receiver = receiver;
+				p.ping = lag / 1000;
+				p.message = message;
+				outPackets.Add(p);
+			}
 		}
 
 	}

@@ -20,7 +20,7 @@ public class ClientInterpolationSystem : AbstractSystem {
 				if(actor.id != world.ownerId)
 				{
 					MoveComponent moveComp = world.players[i].GetComponent<MoveComponent>();
-					if(moveComp.savedPoses.Count > 0)
+					if(moveComp.savedPoses.Count >= 2)
 					{
 						moveComp.step += dt;
 						moveComp.pos = Vector3.Lerp(moveComp.savedPoses[0], moveComp.savedPoses[1], moveComp.step/MAX_STEP/1000f);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class NetworkClientSystem : AbstractSystem {
 	private World2WorldPipeline connector;
+	public int lastServerFrame = 0;
 	public NetworkClientSystem(World2WorldPipeline connector)
 	{
 		this.connector = connector;
@@ -34,6 +35,8 @@ public class NetworkClientSystem : AbstractSystem {
 			if(message.cmdId == MessageList.CMD_UPDATE_GAME_STATE)
 			{
 				MessageList.UpdateStateMessage updateStateMsg = message  as MessageList.UpdateStateMessage;
+				if(lastServerFrame > updateStateMsg.serverFrame) return;
+				lastServerFrame = updateStateMsg.serverFrame;
 				List<MessageList.ActorData> gameState = updateStateMsg.content;
 				for(int i = 0; i < world.players.Count; ++i)
 				{

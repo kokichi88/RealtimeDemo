@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class ReconciliationSystem : AbstractSystem {
 
+	int lastServerFrame = 0;
 
 	protected override void OnAddedToWorld (World world)
 	{
@@ -34,6 +35,8 @@ public class ReconciliationSystem : AbstractSystem {
 			if(world.mode == World.Mode.ON_LINE)
 			{
 				MessageList.UpdateStateMessage updateStateMsg = message  as MessageList.UpdateStateMessage;
+				if(lastServerFrame > updateStateMsg.serverFrame) return;
+				lastServerFrame = updateStateMsg.serverFrame;
 				MessageList.ActorData actorData = ClientInterpolationSystem.GetActorDataById(this.world.ownerId, updateStateMsg.content);
 				if(actorData != null && player != null)
 				{
@@ -41,22 +44,25 @@ public class ReconciliationSystem : AbstractSystem {
 //					moveComp.dir = actorData.dir;
 //					moveComp.currSpeed = actorData.currentSpeed;
 					int lastInputProcessedFrame = -1;
-					for(int i = 0; i < queueMoves.Count; ++i)
+					for(int i = 0; i < actorData.lastProcessedMoves.Count; ++i)
 					{
-						for(int j = 0; j < actorData.lastProcessedMoves.Count; ++j)
+						bool found = false;
+						for(int j = 0; j < queueMoves.Count; ++j)
 						{
-							if(queueMoves[i].moveId <= actorData.lastProcessedMoves[j].moveId)
+							if(queueMoves[j].moveId <= actorData.lastProcessedMoves[i].moveId)
 							{
 //								Debug.Log(string.Format("[Remove processed input {0}] server's frame {1} - client's frame {2} ",queueMoves[i].moveId, updateStateMsg.serverFrame,
 //								                        world.currentFrame));
 								lastInputProcessedFrame = updateStateMsg.serverFrame;
-								moveComp.queueMoves.RemoveAt(i);
-								actorData.lastProcessedMoves.RemoveAt(j);
-								--i;
+								queueMoves.RemoveAt(j);
 								--j;
-								if( i < 0)
-									break;
+								found = true;
 							}
+						}
+						if(found)
+						{
+							actorData.lastProcessedMoves.RemoveAt(i);
+							--i;
 						}
 
 					}

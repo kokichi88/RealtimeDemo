@@ -50,7 +50,10 @@ public class MoveSystem : AbstractSystem {
 			MessageList.MoveMessage moveMsg = message as MessageList.MoveMessage;
 			GameObject player = this.world.GetPlayerById(moveMsg.actorId);
 			MoveComponent moveComp = player.GetComponent<MoveComponent>();
-			moveComp.queueMoves.Add(moveMsg);
+			if(moveComp.queueMoves.Count > 0 && moveComp.queueMoves[moveComp.queueMoves.Count-1].moveId > moveMsg.moveId)
+				break;
+			else
+				moveComp.queueMoves.Add(moveMsg);
 			break;
 		}
 	}
