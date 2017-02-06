@@ -72,6 +72,7 @@ public class World2WorldPipeline : MonoBehaviour {
 			Packet p = new Packet();
 			p.sender = sender;
 			p.lag = packetLoseOrderPercent >= Random.Range(0,100) ? Random.Range(0, 2 * lag/1000): lag / 1000;
+			p.lag /= 2;
 			p.message = message;
 			inPackets.Add(p);
 		}
@@ -87,6 +88,7 @@ public class World2WorldPipeline : MonoBehaviour {
 				Packet p = new Packet();
 				p.receiver = receiver;
 				p.lag = packetLoseOrderPercent >= Random.Range(0,100) ? Random.Range(0, 2 * lag/1000): lag / 1000;
+				p.lag /= 2;
 				p.message = message;
 				outPackets.Add(p);
 			}
