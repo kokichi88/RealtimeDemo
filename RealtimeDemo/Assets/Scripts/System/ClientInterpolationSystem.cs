@@ -22,8 +22,8 @@ public class ClientInterpolationSystem : AbstractSystem {
 					MoveComponent moveComp = world.players[i].GetComponent<MoveComponent>();
 					if(moveComp.savedPoses.Count >= 2)
 					{
-						moveComp.step += dt;
-						moveComp.pos = Vector3.Lerp(moveComp.savedPoses[0], moveComp.savedPoses[1], moveComp.step/MAX_STEP/1000f);
+						moveComp.step++;
+						moveComp.pos = Vector3.Lerp(moveComp.savedPoses[0], moveComp.savedPoses[1], moveComp.step/MAX_STEP);
 					}
 				}
 			}

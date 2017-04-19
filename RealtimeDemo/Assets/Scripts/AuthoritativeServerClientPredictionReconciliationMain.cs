@@ -54,7 +54,7 @@ public class AuthoritativeServerClientPredictionReconciliationMain : Authoritati
 		{
 			MessageList.Message msg = new MessageList.ChangeServerUpdateTime(1f/ updateStateTimesPerSecond);
 			msg.activeFrame = serverWorld.currentFrame + 1;
-			serverWorld.AddMessage(msg);
+			serverWorld.DispatchMessage(msg);
 		}
 
 		ClientInterpolationSystem.MAX_STEP = interpolation_step;

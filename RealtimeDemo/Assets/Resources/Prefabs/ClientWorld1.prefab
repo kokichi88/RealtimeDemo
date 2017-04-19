@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 492410}
   - 114: {fileID: 11492410}
   m_Layer: 0
-  m_Name: ClientWorld
+  m_Name: ClientWorld1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   currentFrame: 0
   mode: 0
   role: 0
+  lag: 100
   ownerId: 0
   players: []
 --- !u!1001 &100100000

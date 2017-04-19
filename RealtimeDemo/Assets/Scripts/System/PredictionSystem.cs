@@ -19,7 +19,7 @@ public class PredictionSystem : MoveSystem {
 					MessageList.MoveMessage msg = new MessageList.MoveMessage(moveComp.currSpeed * moveComp.dir, world.ownerId);
 					msg.activeFrame = world.currentFrame + 1;
 					moveComp.queueMoves.Add(msg);
-					world.AddMessage(msg);
+					world.DispatchMessage(msg);
 				}
 				moveComp.pos += moveComp.dir * moveComp.currSpeed * dt;
 				moveComp.currSpeed -= moveComp.friction * dt;

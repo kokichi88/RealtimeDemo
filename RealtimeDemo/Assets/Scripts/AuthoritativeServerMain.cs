@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class AuthoritativeServerMain : MonoBehaviour {
@@ -45,7 +45,7 @@ public class AuthoritativeServerMain : MonoBehaviour {
 		{
 			MessageList.Message msg = new MessageList.ChangeServerUpdateTime(1f/ updateStateTimesPerSecond);
 			msg.activeFrame = serverWorld.currentFrame + 1;
-			serverWorld.AddMessage(msg);
+			serverWorld.DispatchMessage(msg);
 		}
 	}
 }

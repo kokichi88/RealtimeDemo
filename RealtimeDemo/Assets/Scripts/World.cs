@@ -78,7 +78,7 @@ public class World : MonoBehaviour {
 		system.OnAdd(this);
 	}
 
-	public void AddMessage(MessageList.Message message)
+	public void DispatchMessage(MessageList.Message message)
 	{
 		messages.Add(message);
 	}

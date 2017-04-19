@@ -80,12 +80,12 @@ public class InputSystem : AbstractSystem {
 			case World.Mode.OFF_LINE:
 				MessageList.InputMessage msg = new MessageList.InputMessage(input);
 				msg.activeFrame = input.activeFrame;
-				world.AddMessage(msg);
+				world.DispatchMessage(msg);
 				break;
 			case World.Mode.ON_LINE:
 				MessageList.PredictionInputMessage msg2 = new MessageList.PredictionInputMessage(input);
 				msg2.activeFrame = input.activeFrame;
-				world.AddMessage(msg2);
+				world.DispatchMessage(msg2);
 				break;
 			}
 		}
