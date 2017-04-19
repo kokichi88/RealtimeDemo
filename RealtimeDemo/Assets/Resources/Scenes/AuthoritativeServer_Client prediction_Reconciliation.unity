@@ -242,9 +242,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd140763648b4667a659d4c897a74ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lag: 150
+  lag: 300
   clients: []
   server: {fileID: 0}
+  packetLossPercent: 0
+  packetLoseOrderPercent: 0
 --- !u!1 &280014499
 GameObject:
   m_ObjectHideFlags: 0
